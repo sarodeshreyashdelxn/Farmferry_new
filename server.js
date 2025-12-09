@@ -1,3 +1,4 @@
+/* 
 import dotenv from "dotenv";
 
 // Load environment variables before anything else
@@ -16,9 +17,9 @@ const startServer = async () => {
     await connectDB();
     
     // Start the server
-    app.listen(PORT, '0.0.0.0', () => {
-      console.log(`Server running in ${process.env.NODE_ENV} mode on port ${PORT}`);
-    });
+    // app.listen(PORT, '0.0.0.0', () => {
+    //   console.log(`Server running in ${process.env.NODE_ENV} mode on port ${PORT}`);
+    // });
 
     // app.listen(8000, '0.0.0.0', () => {
     //   console.log("Server running on http://0.0.0.0:8000");
@@ -37,3 +38,49 @@ const startServer = async () => {
 };
 
 startServer();
+*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+import dotenv from "dotenv";
+dotenv.config();
+
+import { connectDB } from "./config/database.js";
+import { app } from "./app.js";
+
+// Connect to MongoDB (no app.listen)
+const init = async () => {
+  try {
+    await connectDB();
+
+    // handle errors
+    process.on("unhandledRejection", (err) => {
+      console.error("UNHANDLED REJECTION! Shutting down...");
+      console.error(err.name, err.message);
+      process.exit(1);
+    });
+  } catch (error) {
+    console.error("Failed to initialize server:", error);
+  }
+};
+
+init();
+
+// Export Express app for Vercel
+export default app;
