@@ -52,8 +52,10 @@ router.use("/sms", smsRoutes);
 
 //Excel Upload Route
 router.use('/excel-upload', excelUploadRoutes);
+
+router.use("/coupons", couponRoutes);
+
 // Error handler middleware (should be last)
 router.use(errorHandler);
-router.use("/coupons", couponRoutes);
 
 export default router;

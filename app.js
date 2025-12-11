@@ -109,6 +109,20 @@ app.get("/test-invoice", (req, res) => {
   });
 });
 
+
+// Track request performance (to find slow APIs)
+app.use((req, res, next) => {
+  const start = Date.now();
+
+  res.on("finish", () => {
+    const time = Date.now() - start;
+    console.log(`⏱ ${req.method} ${req.originalUrl} - ${time}ms`);
+  });
+
+  next();
+});
+
+
 // API Routes
 app.use("/api/v1", routes);
 
